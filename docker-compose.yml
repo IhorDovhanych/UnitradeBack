@@ -6,11 +6,13 @@ services:
     container_name: unitrade_db
     environment:
       - MARIADB_ALLOW_EMPTY_ROOT_PASSWORD=True
+      - MYSQL_USER=unitrade_user
+      - MYSQL_PASSWORD=SA-is-the-best
     env_file:
       - .env
     restart: on-failure
     ports:
-      - "3310:3306"
+      - "3306"
     volumes:
       - db_data:/var/lib/mysql`
     networks:

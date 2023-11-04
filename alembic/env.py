@@ -33,8 +33,8 @@ from session import Base
 target_metadata = [Base.metadata]
 
 # database_url = f"postgresql://{settings.POSTGRES_USER}:{settings.POSTGRES_PASSWORD}@{settings.POSTGRES_HOST}:{settings.POSTGRES_PORT}/{settings.POSTGRES_DB}"
-database_url = (f"mysql+pymysql://root:"
-                f"@127.0.0.1:3310/unitrade_db")
+database_url = (f"mysql+pymysql://unitrade_user:SA-is-the-best"
+                f"@127.0.0.1:3306/unitrade_db")
 # print(f"{database_url=}")
 config.set_main_option("sqlalchemy.url", database_url)
 # other values from the config, defined by the needs of env.py,

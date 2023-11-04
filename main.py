@@ -2,17 +2,16 @@ from fastapi import FastAPI, Depends
 from pydantic import BaseModel
 import pymysql.cursors
 from sqlalchemy.orm import Session
-from session import get_session
+#from session import get_session
 
 app = FastAPI()
 connection = pymysql.connect(
     host='127.0.0.1',
-    user='root',
-    password='',
+    user='unitrade_user',
+    password='SA-is-the-best',
     database='unitrade_db',
-    port=3310,
-    charset='utf8mb4',
-    cursorclass=pymysql.cursors.DictCursor
+    port=3306,
+    charset='utf8mb4'
 )
 @app.get('/test')
 def test():
@@ -25,3 +24,8 @@ def test():
             result = cursor.fetchall() 
         connection.commit()
         return result
+
+@app.get('/')
+def test2():
+    return "test"
+
