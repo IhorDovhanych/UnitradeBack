@@ -3,7 +3,7 @@ from pydantic import BaseModel
 import pymysql.cursors
 from sqlalchemy.orm import Session
 #from session import get_session
-
+#test
 app = FastAPI()
 connection = pymysql.connect(
     host='127.0.0.1',
