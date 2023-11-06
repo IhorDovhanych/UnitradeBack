@@ -8,6 +8,7 @@ services:
       - MARIADB_ALLOW_EMPTY_ROOT_PASSWORD=True
       - MYSQL_USER=unitrade_user
       - MYSQL_PASSWORD=SA-is-the-best
+      - MYSQL_PORT=3306
     env_file:
       - .env
     restart: on-failure
