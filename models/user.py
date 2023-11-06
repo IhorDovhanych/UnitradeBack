@@ -7,7 +7,7 @@ import datetime
 class User(Base):
     __tablename__ = 'users'
     id = Column(Integer, Sequence("user_id_seq"), primary_key=True, index=True)
-    name = Column(String)
+    name = Column(String(256))
     password = Column(String(128))
     email = Column(EmailType(length=128), unique=True)
     jwt_token = Column(String(256))
