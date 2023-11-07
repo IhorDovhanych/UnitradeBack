@@ -1,5 +1,4 @@
 from fastapi import FastAPI
-from routes import User, Role
 
 app = FastAPI()
 
@@ -7,5 +6,4 @@ app = FastAPI()
 def test2():
     return "test"
 
-app.include_router(User.router, prefix='/user')
-app.include_router(Role.router, prefix='/role')
+import routes

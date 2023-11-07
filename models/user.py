@@ -16,6 +16,7 @@ class User(Base):
     roles = relationship("Role", back_populates="users")
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow)
+    
 class UserModel(BaseModel):
     name: str
     password: str
