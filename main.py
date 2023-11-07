@@ -2,8 +2,10 @@ from fastapi import FastAPI
 
 app = FastAPI()
 
-@app.get('/')
+
+@app.get("/")
 def test2():
     return "test"
+
 
 import routes
