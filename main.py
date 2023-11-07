@@ -7,5 +7,5 @@ app = FastAPI()
 def test2():
     return "test"
 
-app.include_router(User.router)
-app.include_router(Role.router)
+app.include_router(User.router, prefix='/user')
+app.include_router(Role.router, prefix='/role')

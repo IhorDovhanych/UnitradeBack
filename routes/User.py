@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 
 router = APIRouter()
 
-@router.post('/user/create')
+@router.post('/create')
 def create_user(item: UserModel,  db: Session = Depends(get_session)):
     user = User(
         name=item.name,
