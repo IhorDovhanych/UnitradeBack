@@ -3,3 +3,5 @@ venv
 __pycache__
 tmp
 public
+session.py
+alembic/env.py
