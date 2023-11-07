@@ -26,7 +26,7 @@ def upgrade():
         sa.Column('password', sa.String(128)),
         sa.Column('email', sa.String(128), unique=True),
         sa.Column('jwt_token', sa.String(256)),
-        sa.Column('author_id', sa.Integer, sa.ForeignKey("roles.id")),
+        sa.Column('role_id', sa.Integer, sa.ForeignKey("roles.id")),
         sa.Column('created_at', sa.DateTime, default=datetime.datetime.utcnow),
         sa.Column('updated_at', sa.DateTime, onupdate=datetime.datetime.utcnow)
     )

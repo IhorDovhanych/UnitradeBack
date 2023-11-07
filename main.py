@@ -1,7 +1,5 @@
-from fastapi import FastAPI, Depends
-from pydantic import BaseModel
-from sqlalchemy.orm import Session
-#from session import get_session
+from fastapi import FastAPI
+from routes import User, Role
 
 app = FastAPI()
 
@@ -9,3 +7,5 @@ app = FastAPI()
 def test2():
     return "test"
 
+app.include_router(User.router)
+app.include_router(Role.router)
