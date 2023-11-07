@@ -5,15 +5,16 @@ from sqlalchemy.orm import Session
 
 router = APIRouter()
 
-@router.post('/create')
-def create_user(item: UserModel,  db: Session = Depends(get_session)):
+
+@router.post("/create")
+def create_user(item: UserModel, db: Session = Depends(get_session)):
     user = User(
         name=item.name,
         password=item.password,
         email=item.email,
         jwt_token=item.jwt_token,
         role_id=item.role_id,
-        )
+    )
     db.add(user)
     db.commit()
     db.refresh(user)
