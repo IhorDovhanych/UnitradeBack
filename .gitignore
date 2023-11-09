@@ -6,3 +6,4 @@ public
 session.py
 alembic/env.py
 .idea
+images

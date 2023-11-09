@@ -14,6 +14,10 @@ class User(Base):
     jwt_token = Column(String(256))
     role_id = Column(Integer, ForeignKey("roles.id"))
     roles = relationship("Role", back_populates="users")
+
+    posts = relationship("Post", back_populates="users")
+    reports = relationship("Report", back_populates="users")
+
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow)
 class UserModel(BaseModel):
