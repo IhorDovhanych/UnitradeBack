@@ -5,8 +5,9 @@ from sqlalchemy_utils import EmailType
 import datetime
 from pydantic import BaseModel
 
+
 class User(Base):
-    __tablename__ = 'users'
+    __tablename__ = "users"
     id = Column(Integer, autoincrement=True, primary_key=True, index=True)
     name = Column(String(256))
     password = Column(String(128))
@@ -19,13 +20,18 @@ class User(Base):
     reports = relationship("Report", back_populates="users")
 
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
-    updated_at = Column(DateTime, default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow)
+    updated_at = Column(
+        DateTime, default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow
+    )
+
+
 class UserModel(BaseModel):
     name: str
     password: str
     email: str
     jwt_token: str
     role_id: int
+
     class Config:
         orm_mode = True
         arbitrary_types_allowed = True

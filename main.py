@@ -1,14 +1,10 @@
 from fastapi import FastAPI
-from routes import User, Role, Post
 
 app = FastAPI()
 
 
-@app.get('/')
+@app.get("/")
 def test2():
     return "test"
 
-
-app.include_router(User.router, prefix='/user')
-app.include_router(Role.router, prefix='/role')
-app.include_router(Post.router)
+import routes
