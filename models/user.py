@@ -3,7 +3,7 @@ from sqlalchemy import String, Integer, Column, ForeignKey, Sequence, DateTime
 from sqlalchemy.orm import relationship
 from sqlalchemy_utils import EmailType
 import datetime
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr
 
 
 class User(Base):
@@ -24,7 +24,7 @@ class User(Base):
 class UserModel(BaseModel):
     name: str
     password: str
-    email: str
+    email: EmailStr
     jwt_token: str
     role_id: int
 
