@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Integer, Boolean, DateTime, ForeignKey, Text
+from sqlalchemy import Column, String, Integer, Boolean, DateTime, ForeignKey, Text, Numeric
 from sqlalchemy.orm import relationship
 from core.session import Base
 from pydantic import BaseModel
@@ -11,7 +11,7 @@ class Post(Base):
     title = Column(String(256))
     description = Column(Text())
     display = Column(Boolean(), default=True)
-    user_id = Column(Integer, ForeignKey("users.id"))
+    user_id = Column(Numeric(precision=32, scale=0), ForeignKey("users.id"))
 
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)

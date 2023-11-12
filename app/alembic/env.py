@@ -28,10 +28,14 @@ fileConfig(config.config_file_name)
 # ... etc.
 
 # from models.main import *
-from core.session import Base
+#from core.session import Base
 
 
-target_metadata = [Base.metadata]
+#target_metadata = [Base.metadata]
+from models import User
+target_metadata = [
+    User.metadata,
+]
 
 # database_url = f"postgresql://{settings.POSTGRES_USER}:{settings.POSTGRES_PASSWORD}@{settings.POSTGRES_HOST}:{settings.POSTGRES_PORT}/{settings.POSTGRES_DB}"
 database_url = (

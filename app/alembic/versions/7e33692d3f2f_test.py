@@ -28,16 +28,14 @@ def upgrade() -> None:
     )
     op.create_index(op.f('ix_roles_id'), 'roles', ['id'], unique=False)
     op.create_table('users',
-    sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
+    sa.Column('id', sa.Numeric(precision=32, scale=0), nullable=False),
     sa.Column('name', sa.String(length=256), nullable=True),
-    sa.Column('password', sa.String(length=128), nullable=True),
     sa.Column('email', sqlalchemy_utils.types.email.EmailType(length=128), nullable=True),
-    sa.Column('jwt_token', sa.String(length=256), nullable=True),
     sa.Column('role_id', sa.Integer(), nullable=True),
+    sa.Column('picture', sa.String(length=256), nullable=True),
     sa.Column('created_at', sa.DateTime(), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.ForeignKeyConstraint(['role_id'], ['roles.id'], ),
-    sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('email')
     )
     op.create_index(op.f('ix_users_id'), 'users', ['id'], unique=False)
@@ -46,7 +44,7 @@ def upgrade() -> None:
     sa.Column('title', sa.String(length=256), nullable=True),
     sa.Column('description', sa.Text(), nullable=True),
     sa.Column('display', sa.Boolean(), nullable=True),
-    sa.Column('user_id', sa.Integer(), nullable=True),
+    sa.Column('user_id', sa.Numeric(precision=32, scale=0), nullable=True),
     sa.Column('created_at', sa.DateTime(), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
@@ -73,7 +71,7 @@ def upgrade() -> None:
     sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
     sa.Column('title', sa.String(length=256), nullable=True),
     sa.Column('description', sa.Text(), nullable=True),
-    sa.Column('user_id', sa.Integer(), nullable=True),
+    sa.Column('user_id', sa.Numeric(precision=32, scale=0), nullable=True),
     sa.Column('post_id', sa.Integer(), nullable=True),
     sa.Column('created_at', sa.DateTime(), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=True),

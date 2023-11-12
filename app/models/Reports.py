@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Integer, DateTime, Text, ForeignKey
+from sqlalchemy import Column, String, Integer, DateTime, Text, ForeignKey, Numeric
 from sqlalchemy.orm import relationship
 from core.session import Base
 from pydantic import BaseModel
@@ -11,7 +11,7 @@ class Report(Base):
     title = Column(String(256))
     description = Column(Text())
 
-    user_id = Column(Integer, ForeignKey("users.id"))
+    user_id = Column(Numeric(precision=32, scale=0), ForeignKey("users.id"))
     post_id = Column(Integer, ForeignKey("posts.id"))
 
     created_at = Column(DateTime, default=datetime.utcnow)

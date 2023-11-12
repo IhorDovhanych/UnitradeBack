@@ -2,12 +2,11 @@ from pydantic import BaseModel, EmailStr
 
 
 class UserModel(BaseModel):
+    id: int
     name: str
-    password: str
     email: EmailStr
-    jwt_token: str
     role_id: int
-
+    picture: str
     class Config:
         orm_mode = True
         arbitrary_types_allowed = True
