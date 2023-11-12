@@ -1,10 +1,6 @@
 from fastapi import APIRouter, Depends, UploadFile, Query
 from sqlalchemy.orm import Session
 
-from models import PostModel
-# from controllers import PostController
-from session import get_session
-
 ReportsRouter = APIRouter(prefix="/api/reports", tags=["Reports API"])
 
 

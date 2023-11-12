@@ -1,7 +1,6 @@
-from session import Base
-from sqlalchemy import String, Integer, Column, Sequence
+from core.session import Base
+from sqlalchemy import String, Integer, Column
 from sqlalchemy.orm import relationship
-from pydantic import BaseModel
 
 
 class Role(Base):
@@ -10,9 +9,3 @@ class Role(Base):
     name = Column(String(64))
     users = relationship("User", back_populates="roles")
 
-
-class RoleModel(BaseModel):
-    name: str
-
-    class Config:
-        orm_mode = True

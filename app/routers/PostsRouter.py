@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 
 from models import PostModel
 from controllers import PostController
-from session import get_session
+from core.session import get_session
 
 PostsRouter = APIRouter(prefix="/api/posts", tags=["Posts API"])
 

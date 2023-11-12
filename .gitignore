@@ -1,10 +1,8 @@
 venv
 .vscode
-.env
 __pycache__
 tmp
 public
-session.py
-alembic/env.py
 .idea
 images
+.env
