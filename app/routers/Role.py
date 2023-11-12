@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends
-from models import Role, RoleModel
-from session import get_session
+from models import Role
+from pydantic_models import RoleModel
+from core.session import get_session
 from sqlalchemy.orm import Session
 
 router = APIRouter()

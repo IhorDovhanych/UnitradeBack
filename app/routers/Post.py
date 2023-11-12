@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, status, UploadFile, File,
 from sqlalchemy.orm import Session
 from sqlalchemy import func
 from models import Post, PostModel, Image
-from session import get_session
+from core.session import get_session
 import shutil
 from typing import Annotated
 

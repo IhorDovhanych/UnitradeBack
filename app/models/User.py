@@ -1,9 +1,8 @@
-from session import Base
-from sqlalchemy import String, Integer, Column, ForeignKey, Sequence, DateTime
+from core.session import Base
+from sqlalchemy import String, Integer, Column, ForeignKey, DateTime
 from sqlalchemy.orm import relationship
 from sqlalchemy_utils import EmailType
 import datetime
-from pydantic import BaseModel, EmailStr
 
 
 class User(Base):
@@ -24,14 +23,3 @@ class User(Base):
         DateTime, default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow
     )
 
-
-class UserModel(BaseModel):
-    name: str
-    password: str
-    email: EmailStr
-    jwt_token: str
-    role_id: int
-
-    class Config:
-        orm_mode = True
-        arbitrary_types_allowed = True
