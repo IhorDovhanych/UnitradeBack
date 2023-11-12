@@ -26,6 +26,3 @@ class ReportModel(BaseModel):
     description: str
     user_id: int
     post_id: int
-
-    class Config:
-        orm_mode = True

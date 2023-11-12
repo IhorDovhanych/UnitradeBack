@@ -21,17 +21,12 @@ class Post(Base):
     categories = relationship("Category", back_populates="posts")
     images = relationship("Image", back_populates="posts")
 
-    # def __str__(self):
-    #     return f"{self.title}: \n{self.description}"
-
 
 class PostModel(BaseModel):
     title: str
     description: str
+    display: bool = True
     user_id: int
-
-    # class Config:
-    #     orm_mode = True
 
 
 class Category(Base):
@@ -43,14 +38,6 @@ class Category(Base):
     posts = relationship("Post", back_populates="categories")
 
 
-# class CategoryModel(BaseModel):
-#     name: str
-#     post_id: int
-#
-#     class Config:
-#         orm_mode = True
-
-
 class Image(Base):
     __tablename__ = 'images'
     id = Column(Integer, autoincrement=True, primary_key=True, index=True)
@@ -58,12 +45,3 @@ class Image(Base):
 
     post_id = Column(Integer, ForeignKey("posts.id"))
     posts = relationship("Post", back_populates="images")
-
-
-# class ImageModel(BaseModel):
-#     url: str
-#     post_id: int
-#
-#     class Config:
-#         orm_mode = True
-
