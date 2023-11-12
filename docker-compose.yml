@@ -7,7 +7,7 @@ services:
     environment:
       - MARIADB_ALLOW_EMPTY_ROOT_PASSWORD=True
     env_file:
-      - .env
+      - /app/.env
     restart: on-failure
     ports:
       - "3310:3306"
