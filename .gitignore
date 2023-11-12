@@ -3,6 +3,6 @@ venv
 __pycache__
 tmp
 public
-session.py
 .idea
 images
+.env
