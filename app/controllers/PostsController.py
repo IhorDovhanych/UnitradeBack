@@ -69,7 +69,7 @@ class PostController:
             return {"response": post}
 
     @staticmethod
-    async def create_post(files, item, categories, db):
+    async def create_post(item, files, categories, db):
         post = Post(**item.dict())
         db.add(post)
         db.commit()
@@ -118,7 +118,7 @@ class PostController:
         return Response("Successfully deleted", 200)
 
     @staticmethod
-    async def add_image(files, id, db):
+    async def add_image(id, files, db):
         for file in files:
             image = Image(post_id=id)
             db.add(image)
@@ -141,6 +141,27 @@ class PostController:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Image with such id not found")
         else:
             db.delete(image)
+            db.commit()
+
+        return Response("Successfully deleted", 200)
+
+    @staticmethod
+    async def add_category(id, categories, db):
+        for c in categories:
+            category = Category(post_id=id, name=c)
+            db.add(category)
+        else:
+            db.commit()
+
+        return Response("Successfully created", 201)
+
+    @staticmethod
+    async def delete_category(id, db):
+        category = db.query(Category).get(id)
+        if category is None:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="category with such id not found")
+        else:
+            db.delete(category)
             db.commit()
 
         return Response("Successfully deleted", 200)

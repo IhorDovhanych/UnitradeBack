@@ -26,12 +26,12 @@ async def get_post(id: int, db: Session = Depends(get_session)):
 
 @PostsRouter.post("/create")
 async def create_post(
-        files: list[UploadFile] = None,
         item: PostModel = Depends(),
+        files: list[UploadFile] = None,
         categories: list[str] = Query([]),
         db: Session = Depends(get_session),
 ):
-    return await PostController.create_post(files, item, categories, db)
+    return await PostController.create_post(item, files, categories, db)
 
 
 @PostsRouter.put("/update/{id}")
@@ -46,9 +46,19 @@ async def delete_post(id: int, db: Session = Depends(get_session)):
 
 @PostsRouter.post("/image/add/{id}")
 async def add_image(id: int, files: list[UploadFile], db: Session = Depends(get_session)):
-    return await PostController.add_image(files, id, db)
+    return await PostController.add_image(id, files, db)
 
 
 @PostsRouter.delete("/image/delete/{id}")
 async def delete_image(id: int, db: Session = Depends(get_session)):
     return await PostController.delete_image(id, db)
+
+
+@PostsRouter.post("/category/add/{id}")
+async def add_category(id: int, categories: list[str] = Query([]), db: Session = Depends(get_session)):
+    return await PostController.add_category(id, categories, db)
+
+
+@PostsRouter.delete("/category/delete/{id}")
+async def delete_category(id: int, db: Session = Depends(get_session)):
+    return await PostController.delete_category(id, db)

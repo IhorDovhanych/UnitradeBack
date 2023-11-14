@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Integer, Boolean, DateTime, ForeignKey, Text, Numeric
+from sqlalchemy import Column, String, Integer, Boolean, DateTime, ForeignKey, Text, Numeric, Float
 from sqlalchemy.orm import relationship
 from core.session import Base
 from pydantic import BaseModel
@@ -11,6 +11,7 @@ class Post(Base):
     title = Column(String(256))
     description = Column(Text())
     display = Column(Boolean(), default=True)
+    price = Column(Float, default=None)
     user_id = Column(Numeric(precision=32, scale=0), ForeignKey("users.id"))
 
     created_at = Column(DateTime, default=datetime.utcnow)
@@ -26,6 +27,7 @@ class PostModel(BaseModel):
     title: str
     description: str
     display: bool = True
+    price: float = None
     user_id: int
 
 
