@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session, sessionmaker, DeclarativeBase
-from .config import conn_dict
+from core.config import conn_dict
 
 
 engine = create_engine(
