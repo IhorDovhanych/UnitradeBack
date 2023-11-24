@@ -44,6 +44,7 @@ def upgrade() -> None:
     sa.Column('title', sa.String(length=256), nullable=True),
     sa.Column('description', sa.Text(), nullable=True),
     sa.Column('display', sa.Boolean(), nullable=True),
+    sa.Column('price', sa.Float(), nullable=True, default=None),
     sa.Column('user_id', sa.Numeric(precision=32, scale=0), nullable=True),
     sa.Column('created_at', sa.DateTime(), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=True),

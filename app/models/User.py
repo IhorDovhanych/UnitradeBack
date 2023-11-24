@@ -17,3 +17,4 @@ class User(Base, CreateUpdateBase):
 
     posts = relationship("Post", back_populates="users")
     reports = relationship("Report", back_populates="users")
+

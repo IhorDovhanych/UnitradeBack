@@ -1,5 +1,5 @@
 from .Role import *
 from .User import *
 from .Post import *
-from .Reports import *
+from .Report import *
 from .Common import *
