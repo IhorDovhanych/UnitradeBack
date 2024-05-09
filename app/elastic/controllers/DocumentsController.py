@@ -8,7 +8,6 @@ class DocumentsController:
 
     @staticmethod
     async def create_document(request: Request, name: str, body: str) -> dict:
-        print(body)
         elastic_client = request.app.state.elastic_client
         await elastic_client.index(index=name, document=body)
         return {"success": True, "name": name, "body": body}
