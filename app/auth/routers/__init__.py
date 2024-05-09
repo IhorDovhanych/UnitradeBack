@@ -1,4 +1,4 @@
-from auth.routers import Auth
+from auth.routers import AuthRouter
 from main import app
 
-app.include_router(Auth.router, prefix='/auth', tags=["Auth"])
+app.include_router(AuthRouter.router, prefix='/auth', tags=["Auth"])

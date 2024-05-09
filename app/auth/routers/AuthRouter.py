@@ -6,7 +6,7 @@ from core.session import get_session
 from sqlalchemy.orm import Session
 from auth.credential_handler import get_creds
 from googleapiclient.discovery import build
-from routers import User as UserRouter
+from routers import UserRouter
 from pydantic_models import UserModel
 import google.auth.transport.requests
 
