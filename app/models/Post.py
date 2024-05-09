@@ -1,3 +1,4 @@
+from decimal import Decimal
 from sqlalchemy import Column, String, Integer, Boolean, DateTime, ForeignKey, Text, Numeric, Float
 from sqlalchemy.orm import relationship
 from core.session import Base
@@ -29,6 +30,9 @@ class PostModel(BaseModel):
     display: bool = True
     price: float = None
     user_id: int
+    class Config:
+        orm_mode = True
+        arbitrary_types_allowed = True
 
 
 class Category(Base):

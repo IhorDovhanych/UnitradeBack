@@ -61,7 +61,7 @@ INDICES_FOR_MAPPING = {
             "description": {"type": "text"},
             "display": {"type": "boolean"},
             "price": {"type": "float"},
-            "user_id": {"type": "integer"},
+            "user_id": {"type": "keyword"},
             "created_at": {"type": "date"},
             "updated_at": {"type": "date"}
             }

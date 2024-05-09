@@ -69,23 +69,23 @@ class PostController:
             return {"response": post}
 
     @staticmethod
-    async def create_post(item, files, categories, db):
+    async def create_post(item, categories, db):
         post = Post(**item.dict())
         db.add(post)
         db.commit()
 
-        for f in files:
-            image = Image(post_id=post.id)
-            db.add(image)
+        # for f in files:
+        #     image = Image(post_id=post.id)
+        #     db.add(image)
 
-            image = db.query(Image).order_by(Image.id.desc()).first()
-            path = f"{post.id}_{image.id}.jpg"
-            image.url = path
+        #     image = db.query(Image).order_by(Image.id.desc()).first()
+        #     path = f"{post.id}_{image.id}.jpg"
+        #     image.url = path
 
-            with open(images_dir + path, "wb") as buffer:
-                shutil.copyfileobj(f.file, buffer)
-        else:
-            db.commit()
+        #     with open(images_dir + path, "wb") as buffer:
+        #         shutil.copyfileobj(f.file, buffer)
+        # else:
+        #     db.commit()
 
         for c in categories:
             category = Category(post_id=post.id, name=c)
@@ -93,7 +93,7 @@ class PostController:
         else:
             db.commit()
 
-        return Response("Successfully created", 201)
+        return post
 
     @staticmethod
     async def update_post(id, item, db):

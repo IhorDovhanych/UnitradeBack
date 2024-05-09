@@ -1,3 +1,4 @@
+from typing import List
 from fastapi import Request, HTTPException
 
 
@@ -9,7 +10,7 @@ class DocumentsController:
     async def create_document(request: Request, name: str, body: str) -> dict:
         print(body)
         elastic_client = request.app.state.elastic_client
-        await elastic_client.index(index=name, document=body, ignore=400)
+        await elastic_client.index(index=name, document=body)
         return {"success": True, "name": name, "body": body}
 
     @staticmethod
@@ -77,5 +78,25 @@ class DocumentsController:
                 return hits[0]["_id"]
             else:
                 return None
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=str(e))
+        
+    @staticmethod
+    async def search_document_by_text(request: Request, index_name: str, text: str, fields: List[str] = None) -> List[dict]:
+        elastic_client = request.app.state.elastic_client
+        try:
+            if fields is None:
+                fields = ["title", "description"]
+            body = {
+                "query": {
+                    "multi_match": {
+                        "query": text,
+                        "fields": fields
+                    }
+                }
+            }
+            response = await elastic_client.search(index=index_name, body=body)
+            hits = response["hits"]["hits"]
+            return [hit["_source"] for hit in hits]
         except Exception as e:
             raise HTTPException(status_code=500, detail=str(e))

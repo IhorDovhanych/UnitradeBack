@@ -1,20 +1,23 @@
-from fastapi import APIRouter, Depends, UploadFile, Query
+from decimal import Decimal
+from fastapi import APIRouter, Depends, Request, Response, UploadFile, Query
 from sqlalchemy.orm import Session
 
 from models import PostModel
 from controllers import PostController
 from core.session import get_session
 
+from elastic.controllers import DocumentsController
+
 PostsRouter = APIRouter(prefix="/api/posts", tags=["Posts API"])
 
 
 @PostsRouter.get("/")
 async def get_posts(
-        page: int = 0,
-        limit: int = 10,
-        filter_: list[str] = Query([], alias="filter"),
-        sort_: str = Query("created_at desc", alias="sort"),
-        db: Session = Depends(get_session),
+    page: int = 0,
+    limit: int = 10,
+    filter_: list[str] = Query([], alias="filter"),
+    sort_: str = Query("created_at desc", alias="sort"),
+    db: Session = Depends(get_session),
 ):
     return await PostController.get_posts(page, limit, filter_, sort_, db)
 
@@ -26,26 +29,62 @@ async def get_post(id: int, db: Session = Depends(get_session)):
 
 @PostsRouter.post("/create")
 async def create_post(
-        item: PostModel = Depends(),
-        files: list[UploadFile] = None,
-        categories: list[str] = Query([]),
-        db: Session = Depends(get_session),
+    req: Request,
+    item: PostModel,
+    categories: list[str] = Query([]),
+    db: Session = Depends(get_session),
 ):
-    return await PostController.create_post(item, files, categories, db)
+    post = await PostController.create_post(item, categories, db)
+    await DocumentsController.create_document(
+        req,
+        "posts",
+        {
+            "post_id": post.id,
+            "title": item.title,
+            "description": item.description,
+            "display": item.display,
+            "price": float(item.price),
+            "user_id": str(item.user_id),
+        },
+    )
+    return Response("Successfully created", 201)
 
 
 @PostsRouter.put("/update/{id}")
-async def update_post(id: int, item: PostModel, db: Session = Depends(get_session)):
+async def update_post(
+    req: Request, id: int, item: PostModel, db: Session = Depends(get_session)
+):
+    document_id = await DocumentsController.search_document_by_field_with_id(
+        req, "posts", "post_id", id
+    )
+    await DocumentsController.update_document(
+        name="posts",
+        document_id=document_id,
+        body={
+            "title": item.title,
+            "description": item.description,
+            "display": item.display,
+            "price": float(item.price),
+            "user_id": str(item.user_id),
+        },
+    )
     return await PostController.update_post(id, item, db)
 
 
 @PostsRouter.delete("/delete/{id}")
-async def delete_post(id: int, db: Session = Depends(get_session)):
+async def delete_post(req: Request, id: int, db: Session = Depends(get_session)):
+    document_id = await DocumentsController.search_document_by_field_with_id(
+        req, "posts", "post_id", id
+    )
+    await DocumentsController.delete_document(req, name="posts", document_id=document_id)
+
     return await PostController.delete_post(id, db)
 
 
 @PostsRouter.post("/image/add/{id}")
-async def add_image(id: int, files: list[UploadFile], db: Session = Depends(get_session)):
+async def add_image(
+    id: int, files: list[UploadFile], db: Session = Depends(get_session)
+):
     return await PostController.add_image(id, files, db)
 
 
@@ -55,7 +94,9 @@ async def delete_image(id: int, db: Session = Depends(get_session)):
 
 
 @PostsRouter.post("/category/add/{id}")
-async def add_category(id: int, categories: list[str] = Query([]), db: Session = Depends(get_session)):
+async def add_category(
+    id: int, categories: list[str] = Query([]), db: Session = Depends(get_session)
+):
     return await PostController.add_category(id, categories, db)
 
 
