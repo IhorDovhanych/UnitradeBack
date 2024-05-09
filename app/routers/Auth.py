@@ -1,6 +1,6 @@
 import json
 import os
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Request
 from pydantic_models import UserModel
 from core.session import get_session
 from sqlalchemy.orm import Session
@@ -8,7 +8,8 @@ from auth.credential_handler import get_creds
 from googleapiclient.discovery import build
 from routers import User as UserRouter
 from pydantic_models import UserModel
-from google.auth.transport.requests import Request
+import google.auth.transport.requests
+
 
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = (
     "D:\\Projects\\UnitradeBack\\app\\auth\\unitrade-404519-22f4096c1235.json"
@@ -18,7 +19,7 @@ router = APIRouter()
 
 
 @router.get("/")
-def auth(db: Session = Depends(get_session)):
+async def auth(req: Request, db: Session = Depends(get_session),):
     creds = get_creds()
     user_info_service = build("oauth2", "v2", credentials=creds)
     user_info = user_info_service.userinfo().get().execute()
@@ -32,7 +33,7 @@ def auth(db: Session = Depends(get_session)):
             picture=user_info["picture"],
             role_id=1,
         )
-        UserRouter.create_user(item=user_model, db=db)
+        await UserRouter.create_user(req, item=user_model, db=db)
     return {
         "token": creds.token,
         "refresh_token": creds.refresh_token,
@@ -82,7 +83,7 @@ def refresh_token(refresh_token):
         client_id=creds_data["installed"]["client_id"],
         client_secret=creds_data["installed"]["client_secret"],
     )
-    creds.refresh(Request())
+    creds.refresh(google.auth.transport.requests.Request())
     return {
         "token": creds.token,
         "refresh_token": creds.refresh_token,

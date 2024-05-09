@@ -7,6 +7,7 @@ class DocumentsController:
 
     @staticmethod
     async def create_document(request: Request, name: str, body: str) -> dict:
+        print(body)
         elastic_client = request.app.state.elastic_client
         await elastic_client.index(index=name, document=body, ignore=400)
         return {"success": True, "name": name, "body": body}
@@ -42,5 +43,39 @@ class DocumentsController:
                 }
             else:
                 return {"success": False, "message": "Failed to update document"}
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=str(e))
+
+    @staticmethod
+    async def search_document_by_field(
+        request: Request, name: str, field: str, value: str
+    ) -> dict:
+        try:
+            elastic_client = request.app.state.elastic_client
+            response = await elastic_client.search(
+                index=name, body={"query": {"match": {field: value}}}
+            )
+            hits = response["hits"]["hits"]
+            if hits:
+                return hits[0]["_source"]
+            else:
+                return None
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=str(e))
+    
+    @staticmethod
+    async def search_document_by_field_with_id(
+        request: Request, name: str, field: str, value: str
+    ) -> dict:
+        try:
+            elastic_client = request.app.state.elastic_client
+            response = await elastic_client.search(
+                index=name, body={"query": {"match": {field: value}}}
+            )
+            hits = response["hits"]["hits"]
+            if hits:
+                return hits[0]["_id"]
+            else:
+                return None
         except Exception as e:
             raise HTTPException(status_code=500, detail=str(e))
