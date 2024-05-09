@@ -9,4 +9,6 @@ conn_dict = {
     "password": os.environ.get("MYSQL_PASSWORD"),
     "port": int(os.environ.get("MYSQL_PORT")),
     "database": os.environ.get("MYSQL_DATABASE"),
+    "google_project_id": os.environ.get("GOOGLE_PROJECT_ID"),
+    "google_secret_id": os.environ.get("GOOGLE_SECRET_ID")
 }

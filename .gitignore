@@ -6,3 +6,5 @@ public
 .idea
 images
 .env
+creds.json
+token.json

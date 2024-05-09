@@ -33,7 +33,7 @@ def create_user(item: UserModel, db: Session = Depends(get_session)):
         picture=item.picture,
     )
     if user is None:
-        raise HTTPException(status_code=400, detail="Wrond details")
+        raise HTTPException(status_code=400, detail="Wrong details")
     db.add(user)
     db.commit()
     db.refresh(user)
