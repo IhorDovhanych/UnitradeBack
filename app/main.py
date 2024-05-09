@@ -26,5 +26,4 @@ def test2():
 
 
 import routers
-import elastic.routers
 import show_swagger_link
