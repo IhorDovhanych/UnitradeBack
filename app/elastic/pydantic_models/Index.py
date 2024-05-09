@@ -1,7 +1,8 @@
 from pydantic import BaseModel
 
 
-class ElasticDocumentModel(BaseModel):
+class IndexModel(BaseModel):
+    name: str
     body: dict
     class Config:
         orm_mode = True

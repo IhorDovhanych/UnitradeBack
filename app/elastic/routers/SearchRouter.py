@@ -1,9 +1,5 @@
 from fastapi import APIRouter, Query, Request
-from fastapi.responses import RedirectResponse
 from elastic.controllers import SearchController
-from elastic.core import mapping_values
-import starlette.status as status
-from pydantic_models import ElasticIndexModel
 
 router = APIRouter()
 

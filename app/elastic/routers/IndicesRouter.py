@@ -3,7 +3,7 @@ from fastapi.responses import RedirectResponse
 from elastic.controllers import IndicesController
 from elastic.core import mapping_values
 import starlette.status as status
-from pydantic_models import ElasticIndexModel
+from elastic.pydantic_models import IndexModel
 
 router = APIRouter()
 
@@ -30,7 +30,7 @@ async def create_default_indices(req: Request):
 
 
 @router.post("/create")
-async def create_index(item: ElasticIndexModel, req: Request):
+async def create_index(item: IndexModel, req: Request):
     return await IndicesController.create_index(req, item.name, item.body)
 
 
