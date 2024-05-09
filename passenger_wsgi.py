@@ -1,8 +1,7 @@
-import imp
 import os
 import sys
 from a2wsgi import ASGIMiddleware
-from main import app
+from app.main import app
 
 
 sys.path.insert(0, os.path.dirname(__file__))
