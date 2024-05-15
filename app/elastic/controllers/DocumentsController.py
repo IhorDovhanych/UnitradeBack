@@ -62,7 +62,7 @@ class DocumentsController:
                 return None
         except Exception as e:
             raise HTTPException(status_code=500, detail=str(e))
-    
+
     @staticmethod
     async def search_document_by_field_with_id(
         request: Request, name: str, field: str, value: str
@@ -79,21 +79,19 @@ class DocumentsController:
                 return None
         except Exception as e:
             raise HTTPException(status_code=500, detail=str(e))
-        
+
     @staticmethod
-    async def search_document_by_text(request: Request, index_name: str, text: str, fields: List[str] = None) -> List[dict]:
+    async def search_document_by_text(
+        request: Request, index_name: str, text: str, fields: List[str] = None
+    ) -> List[dict]:
         elastic_client = request.app.state.elastic_client
         try:
             if fields is None:
                 fields = ["title", "description"]
             body = {
-                "query": {
-                    "multi_match": {
-                        "query": text,
-                        "fields": fields
-                    }
-                }
-            }
+            "query": {"multi_match": {"query": text, "fields": fields}},
+            
+        }
             response = await elastic_client.search(index=index_name, body=body)
             hits = response["hits"]["hits"]
             return [hit["_source"] for hit in hits]

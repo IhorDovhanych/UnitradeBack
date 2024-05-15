@@ -54,7 +54,7 @@ def login(google_token: str, db: Session = Depends(get_session)):
 
 
 @router.get("/refresh_token")
-def refresh_google_token(token: str, db: Session = Depends(get_session)):
+def refresh_google_token(token: str):
     new_creds = refresh_token(refresh_token=token)
     if new_creds is None:
         raise HTTPException(status_code=401, detail="Invalid Refresh Token")

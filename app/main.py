@@ -26,4 +26,4 @@ def test2():
 
 
 import routers
-import show_swagger_link
+import show_useful_links
